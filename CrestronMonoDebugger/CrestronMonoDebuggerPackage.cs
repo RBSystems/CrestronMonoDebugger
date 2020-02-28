@@ -50,7 +50,7 @@ namespace CrestronMonoDebugger
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             
             await PublishCommand.InitializeAsync(this);
-            await DebugCommand.InitializeAsync(this);
+            await PublishAndDebugCommand.InitializeAsync(this);
             await SettingsCommand.InitializeAsync(this);
         }
 

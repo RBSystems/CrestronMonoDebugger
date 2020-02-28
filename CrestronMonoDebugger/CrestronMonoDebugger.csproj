@@ -47,7 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\DebugCommand.cs" />
+    <Compile Include="Commands\PublishAndDebugCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CrestronMonoDebuggerPackage.cs" />
     <Compile Include="Commands\PublishCommand.cs" />
@@ -88,7 +88,7 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\DebugCommand.png" />
+    <Content Include="Resources\CommandImages.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

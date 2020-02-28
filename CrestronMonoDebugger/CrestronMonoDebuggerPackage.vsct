@@ -39,6 +39,13 @@
           <CommandName>Crestron Mono Debug</CommandName>
         </Strings>
       </Menu>
+      <Menu guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbar" type="Toolbar" >
+        <CommandFlag>DefaultDocked</CommandFlag>
+        <Strings>
+          <ButtonText>Crestron Mono Debug Toolbar</ButtonText>
+          <CommandName>Crestron Mono Debug Toolbar</CommandName>
+        </Strings>
+      </Menu>
     </Menus>
 
     <!-- In this section you can define new menu groups. A menu group is a container for
@@ -51,6 +58,9 @@
       </Group>
       <Group guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel2" priority="0x0700">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenu" />
+      </Group>
+      <Group guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbarGroupLevel1" priority="0x0000">
+        <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbar"/>
       </Group>
     </Groups>
 
@@ -67,15 +77,15 @@
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel1" />
-        <Icon guid="DebugCommandImages" id="bmpPic1" />
+        <Icon guid="CommandImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Publish</ButtonText>
         </Strings>
       </Button>
 
-      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="DebugCommandId" priority="0x0101" type="Button">
+      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndPublishAndDebugCommandId" priority="0x0101" type="Button">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel1" />
-        <Icon guid="DebugCommandImages" id="bmpPic2" />
+        <Icon guid="CommandImages" id="bmpPic2" />
         <Strings>
           <ButtonText>Debug</ButtonText>
         </Strings>
@@ -83,11 +93,28 @@
 
       <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="SettingsCommandId" priority="0x0200" type="Button">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel2" />
-        <Icon guid="DebugCommandImages" id="bmpPicX" />
+        <Icon guid="CommandImages" id="bmpPicX" />
         <Strings>
           <ButtonText>Settings ...</ButtonText>
         </Strings>
       </Button>
+
+      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
+        <Parent guid= "guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbarGroupLevel1" />
+        <Icon guid="CommandImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Publish</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndPublishAndDebugCommandId" priority="0x0300" type="Button">
+        <Parent guid= "guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbarGroupLevel1" />
+        <Icon guid="CommandImages" id="bmpPicX" />
+        <Strings>
+          <ButtonText>Debug</ButtonText>
+        </Strings>
+      </Button>
+
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -97,13 +124,13 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="DebugCommandImages" href="Resources\DebugCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="CommandImages" href="Resources\CommandImages.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
   <KeyBindings>
     <KeyBinding guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishCommandId" editor="guidVSStd97" key1="C" mod1="ALT" key2="P" />
-    <KeyBinding guid="guidCrestronMonoDebuggerPackageCmdSet" id="DebugCommandId" editor="guidVSStd97" key1="C" mod1="ALT" key2="D" />
+    <KeyBinding guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndPublishAndDebugCommandId" editor="guidVSStd97" key1="C" mod1="ALT" key2="D" />
   </KeyBindings>
 
   <Symbols>
@@ -116,11 +143,13 @@
       <IDSymbol name="CrestronMonoDebugMainMenuGroupLevel1" value="0x1100" />
       <IDSymbol name="CrestronMonoDebugMainMenuGroupLevel2" value="0x1200" />
       <IDSymbol name="PublishCommandId" value="0x1110" />
-      <IDSymbol name="DebugCommandId" value="0x1120" />
+      <IDSymbol name="PublishAndPublishAndDebugCommandId" value="0x1120" />
       <IDSymbol name="SettingsCommandId" value="0x1210" />
+      <IDSymbol name="CrestronMonoDebugToolbar" value="0x2000" />
+      <IDSymbol name="CrestronMonoDebugToolbarGroupLevel1" value="0x2100" />
     </GuidSymbol>
 
-    <GuidSymbol name="DebugCommandImages" value="{3fe0604f-1541-4759-bbe0-ce48105cddcf}">
+    <GuidSymbol name="CommandImages" value="{3fe0604f-1541-4759-bbe0-ce48105cddcf}">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

@@ -10,14 +10,14 @@ namespace CrestronMonoDebugger.Commands
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class DebugCommand : CommandBase
+    internal sealed class PublishAndDebugCommand : CommandBase
     {
         #region Properties, Fields and Constants
 
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static DebugCommand Instance { get; private set; }
+        public static PublishAndDebugCommand Instance { get; private set; }
 
         /// <summary>
         /// Gets the service provider from the owner package.
@@ -34,12 +34,12 @@ namespace CrestronMonoDebugger.Commands
         #region Initialization
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DebugCommand"/> class.
+        /// Initializes a new instance of the <see cref="PublishAndDebugCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private DebugCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private PublishAndDebugCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
             Package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -64,12 +64,12 @@ namespace CrestronMonoDebugger.Commands
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in DebugCommand's constructor requires
+            // Switch to the main thread - the call to AddCommand in PublishAndDebugCommand's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new DebugCommand(package, commandService);
+            Instance = new PublishAndDebugCommand(package, commandService);
         }
 
         #endregion
@@ -88,7 +88,7 @@ namespace CrestronMonoDebugger.Commands
             ThreadHelper.ThrowIfNotOnUIThread();
 
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "DebugCommand";
+            string title = "PublishAndDebugCommand";
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(
