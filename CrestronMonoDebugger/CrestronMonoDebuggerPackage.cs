@@ -2,7 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using CrestronMonoDebugger.Commands;
+using CrestronMonoDebugger.Settings;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
 namespace CrestronMonoDebugger
@@ -27,12 +29,61 @@ namespace CrestronMonoDebugger
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(CrestronMonoDebuggerPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideOptionPage(typeof(OptionPageGrid), "Crestron", "Mono Debugger", 0, 0, true)]
     public sealed class CrestronMonoDebuggerPackage : AsyncPackage
     {
+        #region Constants
+
         /// <summary>
         /// CrestronMonoDebuggerPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "bd6ff629-c457-4390-8a42-cdeb97e668cd";
+
+        #endregion
+
+        #region Properties
+
+        public OptionPageGrid Settings => (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+
+        #endregion
+
+        #region Public Methods
+
+        public async Task WriteToOutputWindow(string text)
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(DisposalToken);
+
+            const int visible = 1;
+            const int doNotClearWithSolution = 0;
+
+            Guid guidCrestronMonoDebuggerOuputPane = new Guid("50C4E395-4E87-48BC-9BAC-7C4CD065F6E8");
+            Guid guidPane = guidCrestronMonoDebuggerOuputPane;
+
+            IVsOutputWindow outputWindow;
+
+            // Get the output window
+            outputWindow = await GetServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
+
+            if (outputWindow != null)
+            {
+                // The General pane is not created by default. We must force its creation
+                var returnValue = outputWindow.CreatePane(guidPane, "Crestron Mono Debugger", visible, doNotClearWithSolution);
+                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(returnValue);
+
+                // Get the pane
+                returnValue = outputWindow.GetPane(guidPane, out var outputWindowPane);
+                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(returnValue);
+
+                // Output the text
+                if (outputWindowPane != null)
+                {
+                    outputWindowPane.Activate();
+                    outputWindowPane.OutputString(text);
+                }
+            }
+        }
+
+        #endregion
 
         #region Package Members
 
@@ -48,10 +99,9 @@ namespace CrestronMonoDebugger
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            
+
             await PublishCommand.InitializeAsync(this);
             await PublishAndDebugCommand.InitializeAsync(this);
-            await SettingsCommand.InitializeAsync(this);
         }
 
         #endregion

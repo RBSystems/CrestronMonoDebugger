@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
@@ -22,7 +21,7 @@ namespace CrestronMonoDebugger.Commands
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private AsyncPackage Package { get; set; }
+        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider => Package;
 
         /// <summary>
         /// Command ID.
@@ -39,7 +38,7 @@ namespace CrestronMonoDebugger.Commands
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private PublishCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private PublishCommand(CrestronMonoDebuggerPackage package, OleMenuCommandService commandService)
         {
             Package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -62,7 +61,7 @@ namespace CrestronMonoDebugger.Commands
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static async Task InitializeAsync(CrestronMonoDebuggerPackage package)
         {
             // Switch to the main thread - the call to AddCommand in PublishCommand's constructor requires
             // the UI thread.
@@ -83,20 +82,32 @@ namespace CrestronMonoDebugger.Commands
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private void Execute(object sender, EventArgs e)
+        private async void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "PublishCommand";
+            try
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(Package.DisposalToken);
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                Package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                string message = $"IP: {Package.Settings.IpAddress}";
+                string title = "Publish Command";
+
+                await Package.WriteToOutputWindow($"{title} - {message}");
+
+                // Show a message box to prove we were here
+                VsShellUtilities.ShowMessageBox(
+                    Package,
+                    message,
+                    title,
+                    OLEMSGICON.OLEMSGICON_INFO,
+                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            }
+            catch (Exception ex)
+            {
+                //TODO: write to a log.
+                await Package.WriteToOutputWindow("Unable to publish.  An unknown error occured.");
+                throw;
+            }
         }
 
         #endregion

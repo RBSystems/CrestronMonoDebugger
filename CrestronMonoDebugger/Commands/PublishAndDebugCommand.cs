@@ -20,11 +20,6 @@ namespace CrestronMonoDebugger.Commands
         public static PublishAndDebugCommand Instance { get; private set; }
 
         /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private AsyncPackage Package { get; set; }
-
-        /// <summary>
         /// Command ID.
         /// </summary>
         private const int CommandId = 0x1120;
@@ -39,7 +34,7 @@ namespace CrestronMonoDebugger.Commands
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private PublishAndDebugCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private PublishAndDebugCommand(CrestronMonoDebuggerPackage package, OleMenuCommandService commandService)
         {
             Package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -62,7 +57,7 @@ namespace CrestronMonoDebugger.Commands
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static async Task InitializeAsync(CrestronMonoDebuggerPackage package)
         {
             // Switch to the main thread - the call to AddCommand in PublishAndDebugCommand's constructor requires
             // the UI thread.

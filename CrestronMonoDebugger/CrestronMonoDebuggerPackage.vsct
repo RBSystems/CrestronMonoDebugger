@@ -56,9 +56,6 @@
       <Group guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel1" priority="0x0600">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenu" />
       </Group>
-      <Group guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel2" priority="0x0700">
-        <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenu" />
-      </Group>
       <Group guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbarGroupLevel1" priority="0x0000">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbar"/>
       </Group>
@@ -88,14 +85,6 @@
         <Icon guid="CommandImages" id="bmpPic2" />
         <Strings>
           <ButtonText>Debug</ButtonText>
-        </Strings>
-      </Button>
-
-      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="SettingsCommandId" priority="0x0200" type="Button">
-        <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel2" />
-        <Icon guid="CommandImages" id="bmpPicX" />
-        <Strings>
-          <ButtonText>Settings ...</ButtonText>
         </Strings>
       </Button>
 
@@ -141,10 +130,8 @@
     <GuidSymbol name="guidCrestronMonoDebuggerPackageCmdSet" value="{2a1630cf-d13c-496f-b736-876beb6b9bfb}">
       <IDSymbol name="CrestronMonoDebugMainMenu" value="0x1000" />
       <IDSymbol name="CrestronMonoDebugMainMenuGroupLevel1" value="0x1100" />
-      <IDSymbol name="CrestronMonoDebugMainMenuGroupLevel2" value="0x1200" />
       <IDSymbol name="PublishCommandId" value="0x1110" />
       <IDSymbol name="PublishAndPublishAndDebugCommandId" value="0x1120" />
-      <IDSymbol name="SettingsCommandId" value="0x1210" />
       <IDSymbol name="CrestronMonoDebugToolbar" value="0x2000" />
       <IDSymbol name="CrestronMonoDebugToolbarGroupLevel1" value="0x2100" />
     </GuidSymbol>
