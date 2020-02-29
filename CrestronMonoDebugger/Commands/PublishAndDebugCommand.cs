@@ -82,17 +82,27 @@ namespace CrestronMonoDebugger.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "PublishAndDebugCommand";
+            try
+            {
+                string message = $"IP: {Package.Settings.IpAddress}";
+                string title = "Publish and Debug Command";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                Package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                Package.OutputWindowWriteLine($"{title} - {message}");
+
+                // Show a message box to prove we were here
+                VsShellUtilities.ShowMessageBox(
+                    Package,
+                    message,
+                    title,
+                    OLEMSGICON.OLEMSGICON_INFO,
+                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            }
+            catch (Exception ex)
+            {
+                Package.OutputWindowWriteLine("Unable to publish.  An unknown error occured.");
+                Package.DebugWriteLine(ex);
+            }
         }
 
         #endregion

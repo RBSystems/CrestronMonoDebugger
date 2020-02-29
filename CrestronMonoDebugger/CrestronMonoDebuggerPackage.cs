@@ -49,38 +49,43 @@ namespace CrestronMonoDebugger
 
         #region Public Methods
 
-        public async Task WriteToOutputWindow(string text)
+        public void DebugWriteLine(object message)
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(DisposalToken);
+#if DEBUG
+            OutputWindowWriteLine($"[DEBUG] {message}");
+#endif
+        }
 
-            const int visible = 1;
-            const int doNotClearWithSolution = 0;
-
-            Guid guidCrestronMonoDebuggerOuputPane = new Guid("50C4E395-4E87-48BC-9BAC-7C4CD065F6E8");
-            Guid guidPane = guidCrestronMonoDebuggerOuputPane;
-
-            IVsOutputWindow outputWindow;
-
-            // Get the output window
-            outputWindow = await GetServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
-
-            if (outputWindow != null)
+        public void OutputWindowWriteLine(object message)
+        {
+            ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                // The General pane is not created by default. We must force its creation
-                var returnValue = outputWindow.CreatePane(guidPane, "Crestron Mono Debugger", visible, doNotClearWithSolution);
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(returnValue);
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(DisposalToken);
 
-                // Get the pane
-                returnValue = outputWindow.GetPane(guidPane, out var outputWindowPane);
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(returnValue);
+                const int visible = 1;
+                const int doNotClearWithSolution = 0;
 
-                // Output the text
-                if (outputWindowPane != null)
+                var guidPane = new Guid("50C4E395-4E87-48BC-9BAC-7C4CD065F6E8");
+
+                // Get the output window
+                if (await GetServiceAsync(typeof(SVsOutputWindow)) is IVsOutputWindow outputWindow)
                 {
-                    outputWindowPane.Activate();
-                    outputWindowPane.OutputString(text);
+                    // The General pane is not created by default. We must force its creation
+                    int returnValue = outputWindow.CreatePane(guidPane, "Crestron Mono Debugger", visible, doNotClearWithSolution);
+                    Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(returnValue);
+
+                    // Get the pane
+                    returnValue = outputWindow.GetPane(guidPane, out var outputWindowPane);
+                    Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(returnValue);
+
+                    // Output the message
+                    if (outputWindowPane != null)
+                    {
+                        outputWindowPane.Activate();
+                        outputWindowPane.OutputString($"{DateTime.Now:T}: {message}{Environment.NewLine}");
+                    }
                 }
-            }
+            });
         }
 
         #endregion

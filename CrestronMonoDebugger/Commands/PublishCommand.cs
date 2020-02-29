@@ -82,16 +82,16 @@ namespace CrestronMonoDebugger.Commands
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private async void Execute(object sender, EventArgs e)
+        private void Execute(object sender, EventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             try
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(Package.DisposalToken);
-
                 string message = $"IP: {Package.Settings.IpAddress}";
                 string title = "Publish Command";
 
-                await Package.WriteToOutputWindow($"{title} - {message}");
+                Package.OutputWindowWriteLine($"{title} - {message}");
 
                 // Show a message box to prove we were here
                 VsShellUtilities.ShowMessageBox(
@@ -104,9 +104,8 @@ namespace CrestronMonoDebugger.Commands
             }
             catch (Exception ex)
             {
-                //TODO: write to a log.
-                await Package.WriteToOutputWindow("Unable to publish.  An unknown error occured.");
-                throw;
+                Package.OutputWindowWriteLine("Unable to publish.  An unknown error occured.");
+                Package.DebugWriteLine(ex);
             }
         }
 
