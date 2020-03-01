@@ -84,19 +84,26 @@ namespace CrestronMonoDebugger.Commands
 
             try
             {
-                string message = $"IP: {Package.Settings.IpAddress}";
-                string title = "Publish and Debug Command";
+                Package.OutputWindowWriteLine($"Starting remote run operation on {Package.Settings.IpAddress}.");
 
-                Package.OutputWindowWriteLine($"{title} - {message}");
+                //Get a list of files (name, date, size) from the control system
+                Package.OutputWindowWriteLine($"Requesting file list from {Package.Settings.IpAddress}\\{Package.Settings.Port}");
 
-                // Show a message box to prove we were here
-                VsShellUtilities.ShowMessageBox(
-                    Package,
-                    message,
-                    title,
-                    OLEMSGICON.OLEMSGICON_INFO,
-                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                //Compile solution
+                Package.OutputWindowWriteLine("Compiling solution");
+
+                //Determine what files have changed
+
+
+                //Zip files that have changed
+
+                //Send zip to control system
+
+                //Unzip files on control system
+
+                //Start program on control system
+
+                Package.OutputWindowWriteLine("Finished.");
             }
             catch (Exception ex)
             {

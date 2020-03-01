@@ -88,19 +88,21 @@ namespace CrestronMonoDebugger.Commands
 
             try
             {
-                string message = $"IP: {Package.Settings.IpAddress}";
-                string title = "Publish Command";
+                Package.OutputWindowWriteLine($"Publishing to {Package.Settings.IpAddress}.");
 
-                Package.OutputWindowWriteLine($"{title} - {message}");
+                //Get a list of files (name, date, size) from the control system
 
-                // Show a message box to prove we were here
-                VsShellUtilities.ShowMessageBox(
-                    Package,
-                    message,
-                    title,
-                    OLEMSGICON.OLEMSGICON_INFO,
-                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                //Compile solution
+
+                //Zip files that have changed
+
+                //Send zip to control system
+
+                //Unzip files on control system
+
+                //Start program on control system
+
+                Package.OutputWindowWriteLine("Finished.");
             }
             catch (Exception ex)
             {
