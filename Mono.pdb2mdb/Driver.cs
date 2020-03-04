@@ -27,15 +27,18 @@ namespace Pdb2Mdb
 
 		public static void Convert (string filename)
 		{
-			using (var asm = AssemblyDefinition.ReadAssembly (filename)) {
-
-				var pdb = asm.Name.Name + ".pdb";
+			using (var asm = AssemblyDefinition.ReadAssembly (filename)) 
+            {
+                var pdb = asm.Name.Name + ".pdb";
 				pdb = Path.Combine (Path.GetDirectoryName (filename), pdb);
 
-				if (!File.Exists (pdb))
-					throw new FileNotFoundException ("PDB file doesn't exist: " + pdb);
+                if (!File.Exists(pdb))
+                {
+                    throw new FileNotFoundException ("PDB file doesn't exist: " + pdb);
+                }
 
-				using (var stream = File.OpenRead (pdb)) {
+				using (var stream = File.OpenRead (pdb)) 
+                {
 					if (IsPortablePdb (stream))
 						throw new PortablePdbNotSupportedException ();
 

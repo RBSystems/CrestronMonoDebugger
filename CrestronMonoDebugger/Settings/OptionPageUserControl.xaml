@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="CrestronMonoDebugger.Settings.OptionPageUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CrestronMonoDebugger.Settings"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="400">
+    <StackPanel Margin="10" Background="White">
+
+        <TextBlock FontSize="16">Control System</TextBlock>
+
+        <Grid Margin="10 5 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="125"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Host" Grid.Row="0" Grid.Column="0" FontSize="14"/>
+            <TextBox Text="{Binding Path=Host}" Grid.Row="0" Grid.Column="1"/>
+
+            <TextBlock Text="Port" Grid.Row="1" Grid.Column="0" Margin="0 10 0 0" FontSize="14"/>
+            <TextBox Text="{Binding Path=Port}" Grid.Row="1" Grid.Column="1" Margin="0 10 0 0" />
+
+            <TextBlock Text="Username" Grid.Row="2" Grid.Column="0" Margin="0 10 0 0" FontSize="14"/>
+            <TextBox Text="{Binding Path=Username}" Grid.Row="2" Grid.Column="1" Margin="0 10 0 0" />
+
+            <TextBlock Text="Password" Grid.Row="3" Grid.Column="0" Margin="0 10 0 0" FontSize="14"/>
+            <PasswordBox local:PasswordBoxHelper.BindPassword="true" local:PasswordBoxHelper.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0 10 0 0" />
+
+            <TextBlock Text="Program Path" Grid.Row="4" Grid.Column="0" Margin="0 10 0 0" FontSize="14"/>
+            <TextBox Text="{Binding Path=RelativePath}" Grid.Row="4" Grid.Column="1" Margin="0 10 0 0" />
+
+            <Button Content="Restore Defaults" Click="RestoreDefaults_OnClick" Width="110" Height="30" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0 10 0 0" FontSize="14"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

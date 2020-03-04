@@ -72,11 +72,11 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
+      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndRunCommandId" priority="0x0100" type="Button">
         <Parent guid="guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugMainMenuGroupLevel1" />
         <Icon guid="CommandImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Publish</ButtonText>
+          <ButtonText>Run</ButtonText>
         </Strings>
       </Button>
 
@@ -88,11 +88,11 @@
         </Strings>
       </Button>
 
-      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishCommandId" priority="0x0100" type="Button">
+      <Button guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndRunCommandId" priority="0x0100" type="Button">
         <Parent guid= "guidCrestronMonoDebuggerPackageCmdSet" id="CrestronMonoDebugToolbarGroupLevel1" />
         <Icon guid="CommandImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Publish</ButtonText>
+          <ButtonText>Run</ButtonText>
         </Strings>
       </Button>
 
@@ -118,7 +118,7 @@
   </Commands>
 
   <KeyBindings>
-    <KeyBinding guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishCommandId" editor="guidVSStd97" key1="C" mod1="ALT" key2="P" />
+    <KeyBinding guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndRunCommandId" editor="guidVSStd97" key1="C" mod1="ALT" key2="P" />
     <KeyBinding guid="guidCrestronMonoDebuggerPackageCmdSet" id="PublishAndDebugCommandId" editor="guidVSStd97" key1="C" mod1="ALT" key2="D" />
   </KeyBindings>
 
@@ -130,7 +130,7 @@
     <GuidSymbol name="guidCrestronMonoDebuggerPackageCmdSet" value="{2a1630cf-d13c-496f-b736-876beb6b9bfb}">
       <IDSymbol name="CrestronMonoDebugMainMenu" value="0x1000" />
       <IDSymbol name="CrestronMonoDebugMainMenuGroupLevel1" value="0x1100" />
-      <IDSymbol name="PublishCommandId" value="0x1110" />
+      <IDSymbol name="PublishAndRunCommandId" value="0x1110" />
       <IDSymbol name="PublishAndDebugCommandId" value="0x1120" />
       <IDSymbol name="CrestronMonoDebugToolbar" value="0x2000" />
       <IDSymbol name="CrestronMonoDebugToolbarGroupLevel1" value="0x2100" />

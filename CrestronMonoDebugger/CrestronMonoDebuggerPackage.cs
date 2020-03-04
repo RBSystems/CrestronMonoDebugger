@@ -105,7 +105,7 @@ namespace CrestronMonoDebugger
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
-            await PublishCommand.InitializeAsync(this);
+            await PublishAndRunCommand.InitializeAsync(this);
             await PublishAndDebugCommand.InitializeAsync(this);
         }
 

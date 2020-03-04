@@ -84,10 +84,10 @@ namespace CrestronMonoDebugger.Commands
 
             try
             {
-                Package.OutputWindowWriteLine($"Starting remote run operation on {Package.Settings.IpAddress}.");
+                Package.OutputWindowWriteLine($"Starting remote run operation on {Package.Settings.Host}.");
 
                 //Get a list of files (name, date, size) from the control system
-                Package.OutputWindowWriteLine($"Requesting file list from {Package.Settings.IpAddress}\\{Package.Settings.Port}");
+                Package.OutputWindowWriteLine($"Requesting file list from {Package.Settings.Host}\\{Package.Settings.Port}");
 
                 //Compile solution
                 Package.OutputWindowWriteLine("Compiling solution");
